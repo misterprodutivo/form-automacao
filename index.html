@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Automatize seu negócio</title>
+    <link rel="icon" href="gerenciamento-de-conteudo.png">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -25,7 +26,7 @@
         <div class="question-container">
             <!-- Questão 1 -->
             <div class="question hidden" id="question1">
-                <div class="question-number">1 de 7</div>
+                <div class="question-number">1 de 8</div>
                 <h2 class="question-text">Digite seu nome completo</h2>
                 <input type="text" class="input-field" id="fullName" placeholder="Seu nome completo">
                 <div class="error-message hidden" id="name-error">Por favor, insira seu nome completo</div>
@@ -37,7 +38,7 @@
 
             <!-- Questão 2 -->
             <div class="question hidden" id="question2">
-                <div class="question-number">2 de 7</div>
+                <div class="question-number">2 de 8</div>
                 <h2 class="question-text">Qual seu WhatsApp?</h2>
                 <input type="tel" class="input-field" id="whatsapp" placeholder="(11) 99999-9999">
                 <div class="error-message hidden" id="whatsapp-error">Por favor, insira um número de WhatsApp válido
@@ -50,7 +51,7 @@
 
             <!-- Questão 3 -->
             <div class="question hidden" id="question3">
-                <div class="question-number">3 de 7</div>
+                <div class="question-number">3 de 8</div>
                 <h2 class="question-text">Seu @ no Instagram</h2>
                 <input type="text" class="input-field" id="instagram" placeholder="@seuuser">
                 <div class="error-message hidden" id="instagram-error">Por favor, insira seu @ do Instagram</div>
@@ -62,7 +63,7 @@
 
             <!-- Questão 4 (início das perguntas com tema verde) -->
             <div class="question hidden green-section" id="question4">
-                <div class="question-number">4 de 7</div>
+                <div class="question-number">4 de 8</div>
                 <h2 class="question-text">Qual é o seu tipo de negócio?</h2>
                 <div class="options">
                     <div class="option" data-value="Loja física">Loja física</div>
@@ -80,7 +81,7 @@
 
             <!-- Questão 5 -->
             <div class="question hidden green-section" id="question5">
-                <div class="question-number">5 de 7</div>
+                <div class="question-number">5 de 8</div>
                 <h2 class="question-text">Qual área você quer automatizar primeiro?</h2>
                 <div class="options">
                     <div class="option" data-value="Atendimento">Atendimento</div>
@@ -97,7 +98,7 @@
 
             <!-- Questão 6 -->
             <div class="question hidden green-section" id="question6">
-                <div class="question-number">6 de 7</div>
+                <div class="question-number">6 de 8</div>
                 <h2 class="question-text">Hoje seu faturamento mensal está em:</h2>
                 <div class="options">
                     <div class="option" data-value="< R$10k">
@@ -112,9 +113,22 @@
                     </div>
                 </div>
 
-                <!-- Questão 7 -->
+                <!-- Questão 7 - Campo de texto livre para o maior desafio -->
                 <div class="question hidden green-section" id="question7">
-                    <div class="question-number">7 de 7</div>
+                    <div class="question-number">7 de 8</div>
+                    <h2 class="question-text">Qual o seu maior desafio atualmente?</h2>
+                    <textarea class="input-field textarea-field" id="biggestChallenge"
+                        placeholder="Descreva aqui o seu maior desafio atual..." rows="4"></textarea>
+                    <div class="error-message hidden" id="challenge-error">Por favor, descreva seu maior desafio</div>
+                    <div class="buttons">
+                        <button class="btn btn-prev" onclick="prevQuestion(7)">Voltar</button>
+                        <button class="btn btn-next" onclick="nextQuestion(7)">Próxima</button>
+                    </div>
+                </div>
+
+                <!-- Questão 8 -->
+                <div class="question hidden green-section" id="question8">
+                    <div class="question-number">8 de 8</div>
                     <h2 class="question-text">Qual urgência da implementação?</h2>
                     <div class="options">
                         <div class="option" data-value="Imediata">Imediata</div>
@@ -123,7 +137,7 @@
                         <div class="option" data-value="Estou avaliando">Estou avaliando</div>
                     </div>
                     <div class="buttons">
-                        <button class="btn btn-prev" onclick="prevQuestion(7)">Voltar</button>
+                        <button class="btn btn-prev" onclick="prevQuestion(8)">Voltar</button>
                         <button class="btn btn-submit" onclick="submitForm()">Enviar</button>
                     </div>
                 </div>
@@ -147,6 +161,7 @@
                 businessType: '',
                 automationArea: '',
                 revenue: '',
+                biggestChallenge: '',
                 urgency: ''
             };
 
@@ -176,7 +191,7 @@
                         case 'question6':
                             answers.revenue = value;
                             break;
-                        case 'question7':
+                        case 'question8':
                             answers.urgency = value;
                             break;
                     }
@@ -193,7 +208,7 @@
             // Atualizar barra de progresso
             function updateProgress(currentQuestion) {
                 const progress = document.getElementById('progress');
-                const percentage = ((currentQuestion) / 7) * 100;
+                const percentage = ((currentQuestion) / 8) * 100;
                 progress.style.width = `${percentage}%`;
             }
 
@@ -233,7 +248,7 @@
                 }
 
                 // Validar se uma opção foi selecionada (para perguntas de múltipla escolha)
-                if (currentQuestion >= 4 && currentQuestion < 7) {
+                if (currentQuestion >= 4 && currentQuestion <= 6) {
                     const currentQuestionElement = document.getElementById(`question${currentQuestion}`);
                     const selectedOption = currentQuestionElement.querySelector('.option.selected');
 
@@ -241,6 +256,17 @@
                         alert('Por favor, selecione uma opção antes de continuar.');
                         return;
                     }
+                }
+
+                // Validar campo de texto livre (questão 7 - maior desafio)
+                if (currentQuestion === 7) {
+                    const challengeInput = document.getElementById('biggestChallenge');
+                    if (!challengeInput.value.trim()) {
+                        document.getElementById('challenge-error').classList.remove('hidden');
+                        return;
+                    }
+                    answers.biggestChallenge = challengeInput.value.trim();
+                    document.getElementById('challenge-error').classList.add('hidden');
                 }
 
                 // Esconder pergunta atual
@@ -296,7 +322,7 @@
             // Validar e enviar formulário
             async function submitForm() {
                 // Validar última pergunta
-                const currentQuestionElement = document.getElementById('question7');
+                const currentQuestionElement = document.getElementById('question8');
                 const selectedOption = currentQuestionElement.querySelector('.option.selected');
 
                 if (!selectedOption) {
@@ -329,7 +355,7 @@
 
                 if (success) {
                     // Mostrar tela de agradecimento
-                    document.getElementById('question7').classList.add('hidden');
+                    document.getElementById('question8').classList.add('hidden');
                     document.getElementById('thankYou').classList.remove('hidden');
                     document.getElementById('progress').style.width = '100%';
 
